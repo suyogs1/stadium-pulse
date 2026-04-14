@@ -91,5 +91,16 @@ python src/main.py
 python -m pytest --cov=. tests/
 ```
 
+### 5. Docker & Cloud Run Deployment
+The project includes a `Dockerfile` optimized for Google Cloud Run.
+```bash
+docker build -t stadium-pulse .
+docker run -p 8080:8080 stadium-pulse
+```
+To deploy to Cloud Run:
+```bash
+gcloud run deploy stadium-pulse --source . --port 8080
+```
+
 ---
 *Developed for the Google Cloud Agentic Coding Hackathon.*
