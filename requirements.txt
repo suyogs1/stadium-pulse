@@ -1,0 +1,9 @@
+pydantic
+streamlit
+pytest
+pytest-asyncio
+pytest-cov
+google-cloud-bigquery
+google-cloud-pubsub
+google-cloud-aiplatform
+vertexai

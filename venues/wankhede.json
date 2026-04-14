@@ -1,0 +1,153 @@
+{
+  "stadium_name": "Wankhede Stadium",
+  "sections": [
+    {
+      "section_id": "S1",
+      "name": "Wankhede Stadium Section 1",
+      "capacity": 12500,
+      "adjacency_matrix": {
+        "S2": 20.0,
+        "S3": 40.0,
+        "S4": 60.0,
+        "S5": 80.0,
+        "S6": 100.0,
+        "S7": 120.0,
+        "S8": 140.0
+      }
+    },
+    {
+      "section_id": "S2",
+      "name": "Wankhede Stadium Section 2",
+      "capacity": 12500,
+      "adjacency_matrix": {
+        "S1": 20.0,
+        "S3": 20.0,
+        "S4": 40.0,
+        "S5": 60.0,
+        "S6": 80.0,
+        "S7": 100.0,
+        "S8": 120.0
+      }
+    },
+    {
+      "section_id": "S3",
+      "name": "Wankhede Stadium Section 3",
+      "capacity": 12500,
+      "adjacency_matrix": {
+        "S1": 40.0,
+        "S2": 20.0,
+        "S4": 20.0,
+        "S5": 40.0,
+        "S6": 60.0,
+        "S7": 80.0,
+        "S8": 100.0
+      }
+    },
+    {
+      "section_id": "S4",
+      "name": "Wankhede Stadium Section 4",
+      "capacity": 12500,
+      "adjacency_matrix": {
+        "S1": 60.0,
+        "S2": 40.0,
+        "S3": 20.0,
+        "S5": 20.0,
+        "S6": 40.0,
+        "S7": 60.0,
+        "S8": 80.0
+      }
+    },
+    {
+      "section_id": "S5",
+      "name": "Wankhede Stadium Section 5",
+      "capacity": 12500,
+      "adjacency_matrix": {
+        "S1": 80.0,
+        "S2": 60.0,
+        "S3": 40.0,
+        "S4": 20.0,
+        "S6": 20.0,
+        "S7": 40.0,
+        "S8": 60.0
+      }
+    },
+    {
+      "section_id": "S6",
+      "name": "Wankhede Stadium Section 6",
+      "capacity": 12500,
+      "adjacency_matrix": {
+        "S1": 100.0,
+        "S2": 80.0,
+        "S3": 60.0,
+        "S4": 40.0,
+        "S5": 20.0,
+        "S7": 20.0,
+        "S8": 40.0
+      }
+    },
+    {
+      "section_id": "S7",
+      "name": "Wankhede Stadium Section 7",
+      "capacity": 12500,
+      "adjacency_matrix": {
+        "S1": 120.0,
+        "S2": 100.0,
+        "S3": 80.0,
+        "S4": 60.0,
+        "S5": 40.0,
+        "S6": 20.0,
+        "S8": 20.0
+      }
+    },
+    {
+      "section_id": "S8",
+      "name": "Wankhede Stadium Section 8",
+      "capacity": 12500,
+      "adjacency_matrix": {
+        "S1": 140.0,
+        "S2": 120.0,
+        "S3": 100.0,
+        "S4": 80.0,
+        "S5": 60.0,
+        "S6": 40.0,
+        "S7": 20.0
+      }
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "G1",
+      "name": "Gate 1"
+    },
+    {
+      "gate_id": "G2",
+      "name": "Gate 2"
+    },
+    {
+      "gate_id": "G3",
+      "name": "Gate 3"
+    }
+  ],
+  "concession_blocks": [
+    {
+      "block_id": "C1",
+      "name": "Food Stand 1",
+      "category": "Global"
+    },
+    {
+      "block_id": "C2",
+      "name": "Food Stand 2",
+      "category": "Global"
+    },
+    {
+      "block_id": "C3",
+      "name": "Food Stand 3",
+      "category": "Global"
+    },
+    {
+      "block_id": "C4",
+      "name": "Food Stand 4",
+      "category": "Global"
+    }
+  ]
+}

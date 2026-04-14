@@ -1,0 +1,289 @@
+{
+  "stadium_name": "Wembley Stadium",
+  "sections": [
+    {
+      "section_id": "S1",
+      "name": "Wembley Stadium Section 1",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S2": 20.0,
+        "S3": 40.0,
+        "S4": 60.0,
+        "S5": 80.0,
+        "S6": 100.0,
+        "S7": 120.0,
+        "S8": 140.0,
+        "S9": 160.0,
+        "S10": 180.0,
+        "S11": 200.0,
+        "S12": 220.0
+      }
+    },
+    {
+      "section_id": "S2",
+      "name": "Wembley Stadium Section 2",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S1": 20.0,
+        "S3": 20.0,
+        "S4": 40.0,
+        "S5": 60.0,
+        "S6": 80.0,
+        "S7": 100.0,
+        "S8": 120.0,
+        "S9": 140.0,
+        "S10": 160.0,
+        "S11": 180.0,
+        "S12": 200.0
+      }
+    },
+    {
+      "section_id": "S3",
+      "name": "Wembley Stadium Section 3",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S1": 40.0,
+        "S2": 20.0,
+        "S4": 20.0,
+        "S5": 40.0,
+        "S6": 60.0,
+        "S7": 80.0,
+        "S8": 100.0,
+        "S9": 120.0,
+        "S10": 140.0,
+        "S11": 160.0,
+        "S12": 180.0
+      }
+    },
+    {
+      "section_id": "S4",
+      "name": "Wembley Stadium Section 4",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S1": 60.0,
+        "S2": 40.0,
+        "S3": 20.0,
+        "S5": 20.0,
+        "S6": 40.0,
+        "S7": 60.0,
+        "S8": 80.0,
+        "S9": 100.0,
+        "S10": 120.0,
+        "S11": 140.0,
+        "S12": 160.0
+      }
+    },
+    {
+      "section_id": "S5",
+      "name": "Wembley Stadium Section 5",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S1": 80.0,
+        "S2": 60.0,
+        "S3": 40.0,
+        "S4": 20.0,
+        "S6": 20.0,
+        "S7": 40.0,
+        "S8": 60.0,
+        "S9": 80.0,
+        "S10": 100.0,
+        "S11": 120.0,
+        "S12": 140.0
+      }
+    },
+    {
+      "section_id": "S6",
+      "name": "Wembley Stadium Section 6",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S1": 100.0,
+        "S2": 80.0,
+        "S3": 60.0,
+        "S4": 40.0,
+        "S5": 20.0,
+        "S7": 20.0,
+        "S8": 40.0,
+        "S9": 60.0,
+        "S10": 80.0,
+        "S11": 100.0,
+        "S12": 120.0
+      }
+    },
+    {
+      "section_id": "S7",
+      "name": "Wembley Stadium Section 7",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S1": 120.0,
+        "S2": 100.0,
+        "S3": 80.0,
+        "S4": 60.0,
+        "S5": 40.0,
+        "S6": 20.0,
+        "S8": 20.0,
+        "S9": 40.0,
+        "S10": 60.0,
+        "S11": 80.0,
+        "S12": 100.0
+      }
+    },
+    {
+      "section_id": "S8",
+      "name": "Wembley Stadium Section 8",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S1": 140.0,
+        "S2": 120.0,
+        "S3": 100.0,
+        "S4": 80.0,
+        "S5": 60.0,
+        "S6": 40.0,
+        "S7": 20.0,
+        "S9": 20.0,
+        "S10": 40.0,
+        "S11": 60.0,
+        "S12": 80.0
+      }
+    },
+    {
+      "section_id": "S9",
+      "name": "Wembley Stadium Section 9",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S1": 160.0,
+        "S2": 140.0,
+        "S3": 120.0,
+        "S4": 100.0,
+        "S5": 80.0,
+        "S6": 60.0,
+        "S7": 40.0,
+        "S8": 20.0,
+        "S10": 20.0,
+        "S11": 40.0,
+        "S12": 60.0
+      }
+    },
+    {
+      "section_id": "S10",
+      "name": "Wembley Stadium Section 10",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S1": 180.0,
+        "S2": 160.0,
+        "S3": 140.0,
+        "S4": 120.0,
+        "S5": 100.0,
+        "S6": 80.0,
+        "S7": 60.0,
+        "S8": 40.0,
+        "S9": 20.0,
+        "S11": 20.0,
+        "S12": 40.0
+      }
+    },
+    {
+      "section_id": "S11",
+      "name": "Wembley Stadium Section 11",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S1": 200.0,
+        "S2": 180.0,
+        "S3": 160.0,
+        "S4": 140.0,
+        "S5": 120.0,
+        "S6": 100.0,
+        "S7": 80.0,
+        "S8": 60.0,
+        "S9": 40.0,
+        "S10": 20.0,
+        "S12": 20.0
+      }
+    },
+    {
+      "section_id": "S12",
+      "name": "Wembley Stadium Section 12",
+      "capacity": 8333,
+      "adjacency_matrix": {
+        "S1": 220.0,
+        "S2": 200.0,
+        "S3": 180.0,
+        "S4": 160.0,
+        "S5": 140.0,
+        "S6": 120.0,
+        "S7": 100.0,
+        "S8": 80.0,
+        "S9": 60.0,
+        "S10": 40.0,
+        "S11": 20.0
+      }
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "G1",
+      "name": "Gate 1"
+    },
+    {
+      "gate_id": "G2",
+      "name": "Gate 2"
+    },
+    {
+      "gate_id": "G3",
+      "name": "Gate 3"
+    },
+    {
+      "gate_id": "G4",
+      "name": "Gate 4"
+    },
+    {
+      "gate_id": "G5",
+      "name": "Gate 5"
+    },
+    {
+      "gate_id": "G6",
+      "name": "Gate 6"
+    }
+  ],
+  "concession_blocks": [
+    {
+      "block_id": "C1",
+      "name": "Food Stand 1",
+      "category": "Global"
+    },
+    {
+      "block_id": "C2",
+      "name": "Food Stand 2",
+      "category": "Global"
+    },
+    {
+      "block_id": "C3",
+      "name": "Food Stand 3",
+      "category": "Global"
+    },
+    {
+      "block_id": "C4",
+      "name": "Food Stand 4",
+      "category": "Global"
+    },
+    {
+      "block_id": "C5",
+      "name": "Food Stand 5",
+      "category": "Global"
+    },
+    {
+      "block_id": "C6",
+      "name": "Food Stand 6",
+      "category": "Global"
+    },
+    {
+      "block_id": "C7",
+      "name": "Food Stand 7",
+      "category": "Global"
+    },
+    {
+      "block_id": "C8",
+      "name": "Food Stand 8",
+      "category": "Global"
+    }
+  ]
+}
