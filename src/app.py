@@ -51,27 +51,34 @@ THEMES = {
     "Dark": {
         "bg_main": "#050505",
         "bg_gradient": "radial-gradient(circle at top right, #0a0a1a, #050505)",
-        "text_main": "#e0e0e0",
-        "text_header": "#ffffff",
-        "card_bg": "rgba(255, 255, 255, 0.05)",
-        "card_border": "rgba(255, 255, 255, 0.15)",
+        "text_main": "#ffffff",
+        "text_header": "#00d4ff",
+        "card_bg": "rgba(30, 30, 40, 0.7)",
+        "card_border": "rgba(255, 255, 255, 0.2)",
         "accent": "#00d4ff",
         "status_green": "#00ff64", "status_yellow": "#ffc800", "status_red": "#ff3232"
     },
     "Light": {
-        "bg_main": "#f8f9fa",
-        "bg_gradient": "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)",
-        "text_main": "#333333",
-        "text_header": "#000000",
-        "card_bg": "rgba(0, 0, 0, 0.03)",
-        "card_border": "rgba(0, 0, 0, 0.1)",
+        "bg_main": "#ffffff",
+        "bg_gradient": "linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%)",
+        "text_main": "#1a1a1a",
+        "text_header": "#0055ff",
+        "card_bg": "rgba(255, 255, 255, 0.9)",
+        "card_border": "rgba(0, 0, 0, 0.15)",
         "accent": "#0055ff",
         "status_green": "#008f39", "status_yellow": "#b8860b", "status_red": "#cc0000"
     },
     "High Contrast": {
-        "bg_main": "#000000", "bg_gradient": "#000000", "text_main": "#ffff00", 
-        "text_header": "#ffffff", "card_bg": "#111111", "card_border": "#ffffff",
-        "accent": "#00ffff", "status_green": "#00ff00", "status_yellow": "#ffff00", "status_red": "#ff0000"
+        "bg_main": "#000000", 
+        "bg_gradient": "linear-gradient(#000000, #000000)", 
+        "text_main": "#ffff00", 
+        "text_header": "#ffffff", 
+        "card_bg": "#000000", 
+        "card_border": "#ffffff",
+        "accent": "#ffff00", 
+        "status_green": "#00ff00", 
+        "status_yellow": "#ffff00", 
+        "status_red": "#ff0000"
     }
 }
 
@@ -105,21 +112,104 @@ st.set_page_config(page_title="StadiumPulse AI Console", layout="wide", page_ico
 st.markdown(f"""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;700&display=swap');
-    html, body, [class*="css"] {{ font-family: 'Outfit', sans-serif; background-color: {theme['bg_main']}; color: {theme['text_main']}; }}
-    .stApp {{ background: {theme['bg_gradient']}; }}
-    .glass-card {{ background: {theme['card_bg']}; border: 1px solid {theme['card_border']}; border-radius: 12px; padding: 1.25rem; height: 100%; backdrop-filter: blur(10px); margin-bottom: 20px; }}
-    .agent-title {{ font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px; color: {theme['accent']}; margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }}
-    .reasoning-line {{ font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: {theme['text_main']}; opacity: 0.7; margin-bottom: 6px; border-left: 2px solid {theme['accent']}; padding-left: 10px; }}
-    .ai-label {{ font-size: 0.75rem; font-weight: 700; color: #ff55ff; background: rgba(255, 85, 255, 0.1); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }}
-    .ai-step {{ font-size: 0.8rem; margin-bottom: 5px; }}
-    .ai-step b {{ color: {theme['accent']}; }}
-    .stat-val {{ font-size: 1.5rem; font-weight: 700; color: {theme['text_header']}; }}
-    .stat-label {{ font-size: 0.75rem; color: {theme['text_main']}; opacity: 0.6; text-transform: uppercase; font-weight: 600; }}
-    .status-pill {{ padding: 3px 10px; border-radius: 15px; font-size: 0.7rem; font-weight: 800; display: inline-block; border: 1px solid transparent; }}
-    .status-green {{ color: {theme['status_green']}; border-color: {theme['status_green']}; }}
-    .status-yellow {{ color: {theme['status_yellow']}; border-color: {theme['status_yellow']}; }}
-    .status-red {{ color: {theme['status_red']}; border-color: {theme['status_red']}; }}
-    h1, h2, h3, h4 {{ color: {theme['text_header']} !important; margin: 0; }}
+    
+    html, body, [class*="css"] {{ 
+        font-family: 'Outfit', sans-serif; 
+        background-color: {theme['bg_main']} !important; 
+        color: {theme['text_main']} !important; 
+    }}
+    
+    .stApp {{ 
+        background: {theme['bg_gradient']} !important; 
+    }}
+    
+    .glass-card {{ 
+        background: {theme['card_bg']}; 
+        border: 2px solid {theme['card_border']}; 
+        border-radius: 12px; 
+        padding: 1.25rem; 
+        height: 100%; 
+        backdrop-filter: blur(10px); 
+        margin-bottom: 20px; 
+        color: {theme['text_main']} !important;
+    }}
+    
+    .agent-title {{ 
+        font-size: 0.9rem; 
+        text-transform: uppercase; 
+        letter-spacing: 1.5px; 
+        color: {theme['accent']} !important; 
+        margin-bottom: 1rem; 
+        font-weight: 700; 
+        display: flex; 
+        align-items: center; 
+        gap: 8px; 
+    }}
+    
+    .reasoning-line {{ 
+        font-family: 'JetBrains Mono', monospace; 
+        font-size: 0.8rem; 
+        color: {theme['text_main']} !important; 
+        opacity: 0.8; 
+        margin-bottom: 6px; 
+        border-left: 2px solid {theme['accent']}; 
+        padding-left: 10px; 
+    }}
+    
+    .ai-label {{ 
+        font-size: 0.75rem; 
+        font-weight: 700; 
+        color: #ff55ff; 
+        background: rgba(255, 85, 255, 0.1); 
+        padding: 2px 8px; 
+        border-radius: 4px; 
+        display: inline-block; 
+        margin-bottom: 8px; 
+    }}
+    
+    .ai-step {{ 
+        font-size: 0.8rem; 
+        margin-bottom: 5px; 
+        color: {theme['text_main']} !important;
+    }}
+    
+    .ai-step b {{ 
+        color: {theme['accent']} !important; 
+    }}
+    
+    .stat-val {{ 
+        font-size: 1.5rem; 
+        font-weight: 700; 
+        color: {theme['text_header']} !important; 
+    }}
+    
+    .stat-label {{ 
+        font-size: 0.75rem; 
+        color: {theme['text_main']} !important; 
+        opacity: 0.7; 
+        text-transform: uppercase; 
+        font-weight: 600; 
+    }}
+    
+    .status-pill {{ 
+        padding: 3px 10px; 
+        border-radius: 15px; 
+        font-size: 0.7rem; 
+        font-weight: 800; 
+        display: inline-block; 
+        border: 2px solid transparent; 
+    }}
+    
+    .status-green {{ color: {theme['status_green']} !important; border-color: {theme['status_green']} !important; }}
+    .status-yellow {{ color: {theme['status_yellow']} !important; border-color: {theme['status_yellow']} !important; }}
+    .status-red {{ color: {theme['status_red']} !important; border-color: {theme['status_red']} !important; }}
+    
+    h1, h2, h3, h4, h5 {{ color: {theme['text_header']} !important; margin-bottom: 0.5rem !important; }}
+    p, span, div, label {{ color: {theme['text_main']} !important; }}
+    
+    /* Streamlit widget overrides */
+    .stSelectbox label, .stButton button {{ color: {theme['text_main']} !important; }}
+    .stMarkdown p {{ color: {theme['text_main']} !important; }}
 </style>
 """, unsafe_allow_html=True)
 
