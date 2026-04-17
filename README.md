@@ -105,4 +105,13 @@ python scripts/run_tests.py     # Automated 82-test Stability Gate
 *   **CI/CD Ready**: Integrated coverage reporting (95% on core agents).
 
 ---
+
+## ☁️ Deployment
+Ready for **Google Cloud Run**.
+```bash
+# Deploying the Dashboard (Container binds to 8080)
+gcloud run deploy stadium-pulse-ui --source . --set-env-vars GEMINI_API_KEY=$KEY --port 8080
+```
+
+---
 *Built with ❤️ for the Google AI Hackathon.*

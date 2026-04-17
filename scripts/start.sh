@@ -17,5 +17,4 @@ fi
 echo "Pre-flight checks passed. Launching system console..."
 
 # 2. Launch Streamlit Dashboard (Default)
-# Note: Streamlit uses ports defined via environment variables in the Dockerfile
-streamlit run src/app.py --server.port=${PORT:-8080} --server.address=0.0.0.0
+streamlit run src/app.py --server.port=8080 --server.address=0.0.0.0
