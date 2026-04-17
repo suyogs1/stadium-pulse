@@ -12,5 +12,8 @@ ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
 
 EXPOSE 8080
 
-# Run the dashboard
-CMD ["streamlit", "run", "src/app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+# Ensure startup script is executable
+RUN chmod +x scripts/start.sh
+
+# Run the startup sequence (Tests -> App)
+CMD ["sh", "scripts/start.sh"]

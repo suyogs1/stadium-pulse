@@ -7,3 +7,8 @@ google-cloud-bigquery
 google-cloud-pubsub
 google-cloud-aiplatform
 vertexai
+python-dotenv
+google-generativeai
+fastapi
+uvicorn
+requests

@@ -1,86 +1,162 @@
+import json
+import logging
+import uuid
+from typing import Dict, List, Any, Optional
 from datetime import datetime, timedelta
-from typing import Dict, List
 from pydantic import BaseModel, Field
-from config import StadiumState, StadiumConfig
-from services.gemini_reasoner import gemini_ai
+from config import StadiumConfig, StadiumState
+from src.services.gemini_reasoner import gemini_ai
+
+# Configure diagnostic logging
+logger = logging.getLogger("StadiumPulse.Optimizer")
 
 class OptimizerAction(BaseModel):
-    """Structured JSON object for the reasoning trace and action output."""
+    """
+    Structured response model for an optimization decision.
+    """
     action_type: str = Field(..., description="Action: REROUTE, INCENTIVIZE, PREDICTIVE_BUFFER, MONITOR_ONLY")
     target_entities: List[str] = Field(default_factory=list)
     reasoning_trace: List[str] = Field(default_factory=list)
     budget_remaining: int = Field(...)
     timestamp: str = Field(default_factory=lambda: datetime.now().isoformat())
+    is_ai_decision: bool = Field(default=False)
+    reasoning_id: Optional[str] = Field(default=None)
+    ai_metadata: Optional[Dict[str, str]] = Field(default=None)
 
 class OptimizerAgent:
-    """Intelligent agent that evaluates real-time stadium states."""
-    def __init__(self, config: StadiumConfig, max_incentives_budget: int = 100):
-        self.config = config
+    """
+    Orchestration Agent for Crowd Management.
+    Interprets data from PulseAgent and identifies the optimal Operational Play.
+    """
+    
+    def __init__(self, stadium_config: StadiumConfig, max_incentives_budget: int = 1000):
+        self.config = stadium_config
         self.max_incentives_budget = max_incentives_budget
         self.budget_remaining = max_incentives_budget
         self.budget_reset_time = datetime.now() + timedelta(hours=1)
-        self.adjacency_matrix = {s.section_id: s.adjacency_matrix for s in config.sections}
-        
+        self.adjacency_map = {s.section_id: s.adjacency_matrix for s in stadium_config.sections}
+
     def _check_budget_reset(self):
-        if datetime.now() >= self.budget_reset_time:
+        """Resets the incentive budget if the refresh window has passed."""
+        if datetime.now() > self.budget_reset_time:
             self.budget_remaining = self.max_incentives_budget
             self.budget_reset_time = datetime.now() + timedelta(hours=1)
+            logger.info("Optimizer: Incentive budget refreshed for the new operational window.")
 
-    def evaluate_plays(self, state: StadiumState) -> str:
+    def evaluate_plays(self, current_state: StadiumState) -> str:
+        """
+        Processes current stadium metrics and generates a strategic plan.
+        """
         self._check_budget_reset()
-        reasoning, target_entities = [], []
+        reasoning_steps: List[str] = []
+        target_entities: List[str] = []
         action_type = "MONITOR_ONLY"
+        is_ai = False
+        reasoning_id = None
+        ai_meta = None
 
-        reasoning.append("Phase 1: Ingesting realtime StadiumState and AdjacencyMatrix.")
-        reasoning.append("Phase 2: Goal Initialization -> 1. Minimizing Crowd Density Variance. 2. Preserving the Incentive Budget.")
-        reasoning.append("Phase 3: Scanning for bottlenecks.")
+        reasoning_steps.extend([
+            "Phase 1: Ingesting realtime StadiumState and AdjacencyMatrix.",
+            "Phase 2: Goal Initialization -> 1. Minimizing Crowd Density Variance. 2. Preserving the Incentive Budget.",
+            "Phase 3: Scanning for infrastructure bottlenecks."
+        ])
 
-        high_wait_gates = [g for g, w in state.wait_times.items() if w > 15.0 and g.startswith('G')]
-        high_wait_concessions = [c for c, w in state.wait_times.items() if w > 10.0 and c.startswith('C')]
-        overcrowded = [s.section_id for s in self.config.sections if state.occupancy.get(s.section_id, 0) > (s.capacity * 0.9)]
+        # Core Heuristic Analysis
+        high_wait_gates = [g_id for g_id, wait in current_state.wait_times.items() if wait > 15.0 and g_id.startswith('G')]
+        high_wait_food = [c_id for c_id, wait in current_state.wait_times.items() if wait > 10.0 and c_id.startswith('C')]
+        overcrowded_sections = [
+            section.section_id for section in self.config.sections 
+            if current_state.occupancy.get(section.section_id, 0) > (section.capacity * 0.9)
+        ]
 
-        # --- Gemini AI Strategic Reasoning (Triggered only if > 85% congestion) ---
-        max_load = 0
-        occupancy_perc_map = {}
-        for s in self.config.sections:
-            perc = state.occupancy.get(s.section_id, 0) / s.capacity
-            occupancy_perc_map[s.section_id] = perc
-            max_load = max(max_load, perc)
+        # Calculate venue-wide load for AI trigger
+        peak_occupancy_ratio = 0.0
+        occupancy_map: Dict[str, float] = {}
+        for section in self.config.sections:
+            load_ratio = current_state.occupancy.get(section.section_id, 0) / section.capacity
+            occupancy_map[section.section_id] = load_ratio
+            peak_occupancy_ratio = max(peak_occupancy_ratio, load_ratio)
 
-        if max_load > 0.85:
-            reasoning.append(f"ALERT: Infrastructure threshold breached ({max_load:.1%}). Engaging Gemini 1.5 Flash...")
-            gemini_insight = gemini_ai.get_strategic_play({"occupancy_perc": occupancy_perc_map, "wait_times": state.wait_times})
-            reasoning.append(f"GEMINI_REASONER Output: {gemini_insight}")
+        # AI ORCHESTRATION PATHWAY
+        if peak_occupancy_ratio > 0.85:
+            is_ai = True
+            reasoning_id = f"GMN-{uuid.uuid4().hex[:8].upper()}"
+            reasoning_steps.append(f"ALERT: Infrastructure threshold breached ({peak_occupancy_ratio:.1%}). Engaging Gemini Engine...")
+            
+            ai_context = {
+                "peak_load": peak_occupancy_ratio,
+                "occupancy_perc": occupancy_map,
+                "wait_times": current_state.wait_times,
+                "reasoning_tag": reasoning_id
+            }
+            
+            gemini_insight = gemini_ai.get_strategic_play(ai_context)
+            reasoning_steps.append(f"GEMINI_REASONER Trace: {gemini_insight}")
+            
+            # Action Mapping
+            if "Predictive Buffer" in gemini_insight: action_type = "PREDICTIVE_BUFFER"
+            elif "Direct Reroute" in gemini_insight: action_type = "REROUTE"
+            elif "Incentive" in gemini_insight: action_type = "INCENTIVIZE"
+            
+            # Metadata Construction
+            obs = "Threshold Breach"
+            anl = "Capacity mismatch across sectors."
+            if "REASONING:" in gemini_insight:
+                parts = gemini_insight.split("STRATEGY:")
+                obs_anl = parts[0].replace("REASONING:", "").strip()
+                obs = obs_anl[:obs_anl.find('.')+1] if '.' in obs_anl else obs_anl
+                anl = obs_anl[len(obs):].strip() if len(obs_anl) > len(obs) else obs_anl
+            
+            ai_meta = {
+                "observation": obs or "High density load detected.",
+                "analysis": anl or "Multi-node congestion risks identified.",
+                "decision": action_type,
+                "strategy": "System-Wide Redistribution"
+            }
+            # For simplicity in this demo, targeting first 2 congested nodes
+            target_entities = [s for s, l in occupancy_map.items() if l > 0.85][:2]
 
-        if overcrowded:
-            reasoning.append(f"Observation: Critical overcrowding in {overcrowded}.")
-            action_type = "PREDICTIVE_BUFFER"
-            target_entities.extend(overcrowded)
-        elif high_wait_gates:
-            reasoning.append(f"Observation: High wait times at gates: {high_wait_gates}.")
-            action_type = "REROUTE"
-            for gate_id in high_wait_gates:
-                alts = [g.gate_id for g in self.config.gates if g.gate_id not in high_wait_gates]
-                if alts:
-                    target_entities.append(f"{gate_id}->{alts[0]}")
+        # HEURISTIC FALLBACK PATHWAY (If AI not triggered or monitoring only)
+        if action_type == "MONITOR_ONLY":
+            if overcrowded_sections:
+                reasoning_steps.append(f"Observation: Critical overcrowding in {overcrowded_sections}.")
+                action_type = "PREDICTIVE_BUFFER"
+                target_entities.extend(overcrowded_sections)
+            elif high_wait_gates:
+                reasoning_steps.append(f"Observation: High wait times at gates: {high_wait_gates}.")
+                action_type = "REROUTE"
+                for g_id in high_wait_gates:
+                    alts = [g.gate_id for g in self.config.gates if g.gate_id != g_id]
+                    if alts:
+                        target_entities.append(f"{g_id}->{alts[0]}")
+                    else:
+                        target_entities.append(g_id)
+                        reasoning_steps.append(f"Decision: No alternative gates available for {g_id}. Recommending buffer.")
+            elif high_wait_food:
+                reasoning_steps.append(f"Observation: Queues at concessions: {high_wait_food}.")
+                incentive_cost = len(high_wait_food) * 10
+                if self.budget_remaining >= incentive_cost:
+                    action_type = "INCENTIVIZE"
+                    target_entities.extend(high_wait_food)
+                    self.budget_remaining -= incentive_cost
                 else:
-                    target_entities.append(gate_id)
-                    reasoning.append(f"Decision: No alternative gates available for {gate_id}. Recommending buffer instead.")
-        elif high_wait_concessions:
-            reasoning.append(f"Observation: Queues at concessions: {high_wait_concessions}.")
-            if self.budget_remaining >= (len(high_wait_concessions) * 10):
-                action_type = "INCENTIVIZE"
-                target_entities.extend(high_wait_concessions)
-                self.budget_remaining -= (len(high_wait_concessions) * 10)
+                    reasoning_steps.append("Incentive budget exhausted for this window.")
             else:
-                reasoning.append("Incentive budget exhausted.")
-        else:
-            reasoning.append("Observation: All metrics are nominal. Current trend is stable; thresholds not breached.")
-            reasoning.append("Decision: Executing MONITOR_ONLY strategy. Saving credits for the final whistle rush to prioritize Preserving the Incentive Budget.")
+                reasoning_steps.append("Observation: All metrics are nominal. Trends are stable.")
+                reasoning_steps.append("Decision: Executing MONITOR_ONLY strategy to preserve incentive budget.")
+
+        # Final Budget Safeguard (Double Check)
+        if action_type == "INCENTIVIZE" and self.budget_remaining < 50 and is_ai:
+            reasoning_steps.append("WARNING: Budget exhaustion. Degrading to MONITOR_ONLY.")
+            action_type = "MONITOR_ONLY"
+            target_entities = []
 
         return OptimizerAction(
             action_type=action_type,
             target_entities=target_entities,
-            reasoning_trace=reasoning,
-            budget_remaining=self.budget_remaining
+            reasoning_trace=reasoning_steps,
+            budget_remaining=self.budget_remaining,
+            is_ai_decision=is_ai,
+            reasoning_id=reasoning_id,
+            ai_metadata=ai_meta
         ).model_dump_json(indent=2)

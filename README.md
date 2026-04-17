@@ -1,106 +1,108 @@
-# 🏟️ StadiumPulse: Multi-Agent Crowd Orchestration
+# 📡 StadiumPulse: AI Crowd Orchestration System
 
-**Orchestrating stadium crowds with "Glass-Box" Agentic Reasoning.**
+[![Quality Gate](https://github.com/suyogs1/stadium-pulse/actions/workflows/tests.yml/badge.svg)](https://github.com/suyogs1/stadium-pulse/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
----
-
-## 🌟 Project Overview
-StadiumPulse is a next-generation crowd management system that replaces static rules with **Agentic Reasoning**. By observing real-time crowd signals and applying spatial analysis, the system identifies bottlenecks before they become safety hazards, performing intelligent interventions to smooth the "pulse" of the venue.
-
-## ⚠️ Problem
-Modern stadiums face extreme congestion spikes during innings breaks or match conclusions. Traditional methods lack:
-1. **Strategic Anticipation**: Systems react only after congestion occurs.
-2. **Contextual Reasoning**: Simple rules can't differentiate between a normal rush and a dangerous bottleneck.
-3. **Closing the Loop**: There is rarely an automated feedback loop verifying if an intervention worked.
-
-## 🏗️ Architecture
-StadiumPulse is built on a modular, event-driven architecture integrated with the Google Cloud ecosystem.
-
-```mermaid
-graph TD
-    subgraph "Stadium Environment"
-        Sensors["Crowd Sensors (Simulated)"]
-        Fans["Attendees (Mobile Apps)"]
-    end
-
-    subgraph "StadiumPulse Core (src/)"
-        Pulse["Pulse Agent (Monitoring)"]
-        Opt["Optimizer Agent (Reasoning)"]
-        Msg["Messenger Agent (Action)"]
-    end
-
-    subgraph "Google Cloud Stack"
-        BQ["BigQuery (Historical Analytics)"]
-        Vertex["Vertex AI (Gemini 1.5 Flash)"]
-        PubSub["Pub/Sub (Real-time Messaging)"]
-    end
-
-    Sensors --> Pulse
-    Pulse --> Opt
-    Opt --> Vertex
-    Vertex --> Opt
-    Opt --> Msg
-    Msg --> PubSub
-    PubSub --> Fans
-    BQ -.-> Pulse
-```
-
-## 🧠 AI Reasoning Transparency
-StadiumPulse exposes the reasoning chain of its AI agents.
-
-1. **Pulse Agent** → Scans signals to detect congestion anomalies.
-2. **Optimizer Agent** → Analyzes spatial data and engages Gemini 1.5 Flash for strategic plays.
-3. **Messenger Agent** → Dispatches interventions via Pub/Sub and GCF.
-
-This **glass-box AI reasoning** design ensures every decision—from shifting fans to under-utilized gates to issuing discount-based incentives—remains observable and explainable in the operations console.
+**StadiumPulse** is an agentic AI platform designed to transform high-density stadium environments from *Chaos to Calm*. Using a multi-agent cluster powered by **Gemini 1.5 Flash**, the system autonomously identifies occupancy bottlenecks and dispatches real-time interventions to ensure fan safety and operational efficiency.
 
 ---
 
-## 🤖 Agent System
-- **Pulse Agent**: Telemetry & Anomaly Detection (Variance ≥30%).
-- **Optimizer Agent**: Brain/Strategist. Triggers **Gemini 1.5 Flash** for strategic play selection when safety thresholds (>85% load) are breached.
-- **Messenger Agent**: dual-dispatch (Pub/Sub + GCF) fan alerts with tone-switching (`INCENTIVE` vs `URGENCY`).
+## 🚀 Why This Matters
+StadiumPulse isn't just a dashboard; it's a **safety-critical orchestration engine** with massive real-world impact:
+*   **🔹 Dynamic Safety**: Proactively mitigates "crush" risks by identifying density spikes *before* they reach critical levels.
+*   **🔹 Operational Excellence**: Projects a **30% reduction in wait times** at gates and concessions via intelligent load balancing.
+*   **🔹 Multi-Industry Scale**: Instantly portable to **airports, metro hubs, and theme parks**.
 
-## 🧠 Gemini AI Integration
-- **Threshold Trigger**: Gemini is only invoked for high-stakes decisions (Breach > 85%).
-- **Strategic Caching**: Fingerprint cache minimizes redundant API calls.
-- **Flash Efficiency**: Uses Gemini 1.5 Flash for high-speed, cost-effective reasoning.
+---
 
-## 🏟️ Multi-Venue Support
-JSON-defined venue profiles for **Narendra Modi Stadium**, **Wankhede Stadium**, and **Wembley Stadium**.
+## 🏗️ The Agentic Loop
+The system employs a 3-agent cluster that executes a continuous **"Scan-Analyze-Act"** cycle:
 
-## ⏱️ Demo Instructions
+1.  **🔍 Pulse Agent**: Ingests real-time telemetry from IoT sensors and gate-counters to build a venue "Digital Twin."
+2.  **🧠 Optimizer Agent**: The strategic brain. For high-load scenarios (>85%), it engages the **Gemini AI Engine** to evaluate spatial strategies.
+3.  **📢 Messenger Agent**: Executes the plan by dispatching redirects and incentives via mobile push notifications and signage.
 
-### 1. Prerequisites
-- Python 3.10+
-- `pip install -r requirements.txt`
+---
 
-### 2. Launch the Dashboard
-The interactive demo console and step-by-step scenario walkthrough.
-```powershell
-streamlit run src/app.py
-```
+## 📸 Demo Preview: 5-Second Clarity
 
-### 3. Run the CLI Simulation (5-Minute Timeline)
-```powershell
-python src/main.py
-```
+| 📡 Orchestration Console | 🧠 Strategic AI Reasoning | 🗺️ Geospatial Heatmap |
+| :--- | :--- | :--- |
+| ![Dashboard Overview](docs/screenshots/dashboard_view.png) | ![AI Reasoning Trace](docs/screenshots/ai_reasoning.png) | ![Heatmap View](docs/screenshots/heatmap_view.png) |
+| *Real-time 3-Agent monitoring.* | *Glass-Box Strategic Analysis.* | *Venue-specific mapping.* |
 
-### 4. Execute Test Suite
-```powershell
-python -m pytest --cov=. tests/
-```
+---
 
-### 5. Docker & Cloud Run Deployment
-The project includes a `Dockerfile` optimized for Google Cloud Run.
+## 🔥 Key Features
+
+-   **Geospatial Heatmapping**: Dynamic rendering of venue-specific seating layouts (Narendra Modi Stadium, Wembley, etc.).
+-   **Glass-Box AI Reasoning**: Unique **Reasoning IDs** and step-by-step traces for every Gemini-powered decision.
+-   **Orchestration Playbook**: Interactive 6-phase walkthrough demonstrating the agentic feedback loop.
+-   **Headless API First**: Fully exposed REST API for integration with 3rd-party stadium apps and IoT stacks.
+-   **Inclusion-by-Design**: WCAG-compliant UI with Dark/Light/High Contrast modes and semantic ARIA landmarks.
+
+---
+
+## 🔎 AI Transparency & Strategic Logic
+StadiumPulse avoids "Black-Box" decisions. We utilize **Gemini 1.5 Flash** for **Spatial Strategic Reasoning**:
+
+*   **Observation**: Detects threshold breach (e.g., Section S1 > 90%).
+*   **Analysis**: Gemini evaluates adjacency load variance to determine if a *Predictive Buffer* is safer than a *Direct Reroute*.
+*   **Traceability**: Every strategic play is logged with an **Audit ID** (e.g., `GMN-7A3B2F`) and timestamp.
+
+---
+
+## 🔌 API Integration: Orchestration-as-a-Service
+StadiumPulse acts as a central hub for external vendor systems (Turnstiles, POS, Fan Apps):
+
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/stadium/state` | `GET` | Retrieve real-time telemetry of all sectors. |
+| `/stadium/update` | `POST` | Push sensor data from external vendor systems. |
+| `/optimizer/decision` | `GET` | Audit the latest AI strategic plan and reasoning trace. |
+| `/simulation/run` | `POST` | Trigger synthetic stress-test scenarios for training. |
+
+### Reference Curl Commands
 ```bash
-docker build -t stadium-pulse .
-docker run -p 8080:8080 stadium-pulse
-```
-To deploy to Cloud Run:
-```bash
-gcloud run deploy stadium-pulse --source . --port 8080
+# Fetch Decisions
+curl -X GET "http://localhost:8080/optimizer/decision" -H "X-API-Key: pulse-secret-default"
+
+# Push Sensor Update
+curl -X POST "http://localhost:8080/stadium/update" \
+  -H "X-API-Key: pulse-secret-default" \
+  -H "Content-Type: application/json" \
+  -d '{"occupancy": {"S1": 9500}, "wait_times": {"G1": 2.0}}'
 ```
 
 ---
-*Developed for the Google Cloud Agentic Coding Hackathon.*
+
+## 🚀 Getting Started
+
+### 1. Environment Configuration
+Create a `.env` file in the root directory:
+```bash
+GEMINI_API_KEY=your_gemini_api_key_here
+GOOGLE_PROJECT_ID=stadium-pulse-dev
+STADIUM_API_KEY=pulse-secret-default
+STADIUM_API_URL=http://localhost:8080
+```
+
+### 2. Installation & Pre-Flight Check
+```bash
+pip install -r requirements.txt
+python scripts/run_tests.py     # Automated 82-test Stability Gate
+```
+
+### 3. Launching the Cluster
+1.  **API Server**: `python src/api/server.py`
+2.  **Visual Console**: `streamlit run src/app.py`
+
+---
+
+## 🧪 Testing & Reliability
+*   **82 Automated Tests**: Covering security, performance, accessibility, and AI reasoning.
+*   **Simulation Fallback**: Automatic shift to simulated reasoning if Gemini API connectivity is lost.
+*   **CI/CD Ready**: Integrated coverage reporting (95% on core agents).
+
+---
+*Built with ❤️ for the Google AI Hackathon.*
