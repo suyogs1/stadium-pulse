@@ -17,7 +17,7 @@ import requests
 from datetime import datetime
 
 # Add project root and src to path for consistent imports
-root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_path)
 sys.path.append(os.path.join(root_path, "src"))
 
