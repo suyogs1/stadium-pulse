@@ -1,0 +1,16 @@
+[flake8]
+max-line-length = 100
+extend-ignore = E203, W503, E402, E501
+exclude =
+    .git,
+    __pycache__,
+    docs/source/conf.py,
+    old,
+    build,
+    dist,
+    .antigravity
+max-complexity = 15
+per-file-ignores =
+    # imported but unused
+    __init__.py: F401
+    src/ui/dashboard.py: E501, W291, W293

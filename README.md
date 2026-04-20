@@ -15,12 +15,39 @@ StadiumPulse isn't just a dashboard; it's a **safety-critical orchestration engi
 
 ---
 
-## 🏗️ The Agentic Loop
-The system employs a 3-agent cluster that executes a continuous **"Scan-Analyze-Act"** cycle:
+---
 
-1.  **🔍 Pulse Agent**: Ingests real-time telemetry from IoT sensors and gate-counters to build a venue "Digital Twin."
-2.  **🧠 Optimizer Agent**: The strategic brain. For high-load scenarios (>85%), it engages the **Gemini AI Engine** to evaluate spatial strategies.
-3.  **📢 Messenger Agent**: Executes the plan by dispatching redirects and incentives via mobile push notifications and signage.
+## ☁️ Google Cloud Integration: The Intelligence Layer
+StadiumPulse is built natively on **Google Cloud Platform (GCP)**, utilizing the most advanced AI and data services to ensure safety-critical reliability.
+
+### 🧠 AI Reasoning with Gemini 1.5 Flash
+The **Gemini Service** acts as the platform's strategic cortex. When the Pulse Agent detects critical congestion (>85%), the system engages Gemini to perform **Spatial Strategic Analysis**. It evaluates adjacency maps and historical patterns to recommend the optimal operational play (e.g., Predictive Buffering vs. Rerouting).
+
+### 📊 Post-Match Analytics with BigQuery
+Every density spike and autonomous decision is streamed into **BigQuery**. This creates a high-fidelity historical audit trail, allowing stadium operators to perform post-match analysis, refine evacuation models, and train local predictive heuristics.
+
+### 📡 Observability via Cloud Logging
+The entire multi-agent loop—from pulse detection to alert dispatch—is monitored via **Google Cloud Logging**. This provides centralized observability and allows for real-time alerting on system health and agentic performance.
+
+### 🏗️ Technical Architecture
+```mermaid
+graph TD
+    subgraph "Stadium Ingress (IoT/Edge)"
+        sensors[IoT Sensors] --> pulse[Pulse Agent]
+    end
+
+    subgraph "Google Cloud Intelligence"
+        pulse --> |Telemetry| logging[Cloud Logging]
+        pulse --> |Current State| opt[Optimizer Agent]
+        opt --> |Strategic Query| gemini[Gemini 1.5 Flash]
+        opt --> |Decision Persistence| bq[BigQuery]
+    end
+
+    subgraph "Intervention (Dispatch)"
+        opt --> |Strategy| msg[Messenger Agent]
+        msg --> |Broadcast| signage[Digital Signage / Mobile App]
+    end
+```
 
 ---
 
